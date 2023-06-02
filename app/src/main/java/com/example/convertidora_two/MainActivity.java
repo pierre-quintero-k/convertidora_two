@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText name, last_name, email, password;
@@ -29,6 +30,26 @@ public class MainActivity extends AppCompatActivity {
         intento1.putExtra( "last_name", last_n_value);
         intento1.putExtra("email", email_value);
         intento1.putExtra("password", password_value);
-        startActivity(intento1);
+        boolean go_on = validateEmail(email_value);
+        if(go_on){
+            startActivity(intento1);
+        }
+    }
+
+    public boolean validateEmail(String email){
+        String email_trim = email.trim();
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (email_trim.matches(emailPattern))
+        {
+            return true;
+            //Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }
